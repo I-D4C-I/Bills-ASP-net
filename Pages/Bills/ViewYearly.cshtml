@@ -1,0 +1,33 @@
+﻿@page "/view/yearly"
+@model ASP.Net.Pages.ViewYearlyModel
+@{
+    ViewData["Title"] = "Счета за год";
+}
+<section class="container">
+    <header class="row">
+        <h1>
+            @ViewData["Title"]
+        </h1>
+    </header>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Номер лицевого счета</th>
+                <th>Счет создан</th>
+                <th>Оплачено</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var bill in Model.Bills)
+            {
+                <tr>
+                    <td>@bill.Number</td>
+                    <td>@bill.CreationDate.ToString("dd MMM yyyy")</td>
+                    <td>@bill.TotalToPay</td>
+                    <td><vc:bill bill="bill"></vc:bill></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

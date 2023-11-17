@@ -1,0 +1,49 @@
+﻿@page "/add/bill"
+@model ASP.Net.Pages.AddBillModel
+@{
+    ViewData["Title"] = "Добавить счет";
+}
+
+<section class="col-7">
+    <header>
+        <h2>
+            @ViewData["Title"]
+        </h2>
+    </header>
+    <form method="post">
+        <div class="form-row mb-5">
+            <label for="bill-number">Лицевой счет</label>
+            <input id="bill-number" class="form-control" type="text" pattern="\d+" name="BillData.Numbet" value="@Model.BillData.Number" />
+        </div>
+        <div class="form-row"> 
+            <section class="container">
+                <header class="row">
+                    <h3 class="w-100">
+                        Услуги
+                    </h3>
+                    @if (TempData["Status"] != null)
+                    {
+                        <p class="w-100">
+                            @TempData["Status"]
+                        </p>
+                    }
+                </header>
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        @await Component.InvokeAsync("Service", new { field = "BillData.HotWaterAndHeating", service = @Model.BillData.HotWaterAndHeating})
+                        @await Component.InvokeAsync("Service", new { field = "BillData.Electricity", service = @Model.BillData.Electricity})
+                        @await Component.InvokeAsync("Service", new { field = "BillData.ColdWater", service = @Model.BillData.ColdWater})
+                    </div>
+                    <div class="col-12 col-sm-6 d-flex align-items-center">
+                        <div class="form-group">
+                            <label for="overpayment">
+                                Переплата
+                            </label>
+                            <input class="form-control" id="overpayment" name="BillData.Overpayent" pattern="\d+,?\d+" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </form>
+</section>

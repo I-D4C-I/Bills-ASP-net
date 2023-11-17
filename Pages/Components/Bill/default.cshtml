@@ -1,0 +1,69 @@
+﻿@model ASP.Net.Models.Bill.Bill
+@{
+    string modalId = $"bill-details-{Model.Id}";
+    string modalHeaderId = $"bill-details-modal-label-{Model.Id}";
+    string modalServicesHeaderId = $"bill-details-services-{Model.Id}";
+}
+<button class="btn btn-primary" data-toggle="modal" data-target="#@modalId">Детали</button>
+<div class="modal fade" id="bill-details" tabindex="-1" role="dialog" aria-labelledby="bill-details-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <section class="modal-content">
+            <header class="modal-header">
+                <h5 class="modal-title" id="@modalHeaderId">
+                    Детали счета
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </header>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            Номер счета:
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            @Model.Number
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            Дата создания:
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            @Model.CreationDate.ToString("dd MMM yyyy")
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <section class="col-12" aria-labelledby="@modalServicesHeaderId">
+                            <header class="w-100">
+                                <h6 id="@modalServicesHeaderId">
+                                    Услуги, входящие в счет
+                                </h6>
+                            </header>
+                            <div class="container-fluid my-2">
+                                <vc:bill-service service="Model.ColdWater"></vc:bill-service>
+                                <vc:bill-service service="Model.HotWaterAndHeating"></vc:bill-service>
+                                <vc:bill-service service="Model.Electricity"></vc:bill-service>
+
+                                <vc:bill-service service=@(new Models.Bill.Service("Переплата", Model.Overpayment))></vc:bill-service>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5 text-weight-bold text-uppercase">
+                                        Всего
+                                    </div>
+                                    <div class="col-sm-12 col-md-7" >
+                                        @Model.TotalToPay
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Закрыть">Закрыть</button>
+            </footer>
+        </section>
+    </div>
+</div>
